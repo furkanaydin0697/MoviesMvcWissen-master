@@ -1,0 +1,15 @@
+﻿@model Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@*@Html.Partial("_Details", Model)*@
+
+@{ 
+    Html.RenderPartial("_Details", Model);
+}
+<br />
+@Html.ActionLink(" Back", "Index",null, new { @class = "fa fa-undo" })
