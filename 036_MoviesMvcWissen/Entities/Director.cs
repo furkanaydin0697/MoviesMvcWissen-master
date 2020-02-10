@@ -1,4 +1,6 @@
-﻿using System;
+﻿using _036_MoviesMvcWissen.Valudations.FluentValidation;
+using FluentValidation.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,6 +8,8 @@ using System.Web;
 
 namespace _036_MoviesMvcWissen.Entities
 {
+    [Validator(typeof(DirectorValidator))]
+
     public class Director
     {
         public int Id { get; set; }

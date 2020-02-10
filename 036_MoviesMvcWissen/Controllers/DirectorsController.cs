@@ -67,6 +67,22 @@ namespace _036_MoviesMvcWissen.Controllers
             {
                 director.Retired = false;
             }
+            if (String.IsNullOrWhiteSpace(director.Name))
+            {
+                ModelState.AddModelError("Name", "Director Name is required!");
+            }
+            if (String.IsNullOrWhiteSpace(director.Surname))
+            {
+                ModelState.AddModelError("Surname", "Director Surname is required!");
+            }
+            if (director.Name.Length > 100)
+            {
+                ModelState.AddModelError("Name", "Director Name must be maximum 100 characters!");
+            }
+            if (director.Surname.Length > 100)
+            {
+                ModelState.AddModelError("Name", "Director Surname must be maximum 100 characters!");
+            }
             if (ModelState.IsValid)
             {
                 db.Directors.Add(director);

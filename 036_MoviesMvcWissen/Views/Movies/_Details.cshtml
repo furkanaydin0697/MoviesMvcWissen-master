@@ -1,5 +1,15 @@
 ﻿@model Movie
 
+@{ 
+    var movieDirectors = Model.MovieDirectors;
+    var directorFullName = "";
+    foreach (var movieDirector in movieDirectors)
+    {
+        directorFullName += movieDirector.Director.Name + " " + movieDirector.Director.Surname + ", ";
+    }
+    directorFullName = directorFullName.Trim(',', ' ');
+}
+
 <div class="row">
     <div class="col-md-2">
         <b>@Html.DisplayNameFor(e => e.Name): </b>
@@ -24,3 +34,13 @@
         @Html.DisplayFor(e => e.ProductionYear)
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-2">
+        <b>@Html.Label("Directors:") </b>
+    </div>
+    <div class="col-md-10">
+        @directorFullName
+    </div>
+</div>
+

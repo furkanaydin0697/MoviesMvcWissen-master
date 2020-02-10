@@ -1,3 +1,4 @@
+using FluentValidation.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace _036_MoviesMvcWissen
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+
+            ModelValidatorProviders.Providers.Clear();
+            ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider() { AddImplicitRequiredValidator = false });
         }
     }
 }
