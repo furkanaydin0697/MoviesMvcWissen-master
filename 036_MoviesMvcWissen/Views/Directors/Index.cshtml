@@ -1,4 +1,8 @@
-﻿@model IEnumerable<_036_MoviesMvcWissen.Entities.Director>
+﻿@*@model IEnumerable<_036_MoviesMvcWissen.Entities.Director>*@
+
+@model _036_MoviesMvcWissen.Models.ViewModels.DirecstorIndexViewModel
+
+@using _036_MoviesMvcWissen.Helpers
 
 @{
     ViewBag.Title = "Index";
@@ -12,18 +16,21 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            @Html.Label("lName", "Director Name:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Surname)
+            @*@Html.DisplayNameFor(model => model.Surname)*@
+            @Html.Label("lSurname", "Director Surname:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Retired)
+            @*@Html.DisplayNameFor(model => model.Retired)*@
+            @Html.Label("lRetired", "Retired?")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Directors) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)

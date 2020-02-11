@@ -1,4 +1,8 @@
-﻿@model List<_036_MoviesMvcWissen.Entities.Movie>
+﻿@*@model List<_036_MoviesMvcWissen.Entities.Movie>*@
+
+@model _036_MoviesMvcWissen.Models.ViewModels.MoviesIndexViewModel
+
+@using _036_MoviesMvcWissen.Helpers
 
 @*@Html.Action("Welcome")*@
 @{
@@ -12,6 +16,25 @@
 <h2>@ViewBag.Title</h2>
 
 <br />
+@using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+{
+    <table class="table">
+        <tr>
+            <td style="width:auto">
+                Production Year:
+            </td>
+            <td>
+                @Html.DropDownList("YearId", Model.Year, new { @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @Html.Button("Filter", "btn btn-success", "submit")
+            </td>
+        </tr>
+    </table>
+}
+
 
 <i class="fa fa-plus" aria-hidden="true"><a href="~/Movies/Add">Add Movie</a></i>
 
@@ -27,19 +50,19 @@
 
 
 <table class="table">
-    <tr>
-        <td></td>
-        <td>
-            <b>Name</b>
-        </td>
-        <td>
-            <b>Production Year</b>
-        </td>
-        <td>
-            <b>Box Office Return</b>
-        </td>
-    </tr>
-    @foreach (var movie in Model)
+    @*<tr>
+            <td></td>
+            <td>
+                <b>Name</b>
+            </td>
+            <td>
+                <b>Production Year</b>
+            </td>
+            <td>
+                <b>Box Office Return</b>
+            </td>
+        </tr>*@
+    @foreach (var movie in Model.Movies)
     {
         <tr>
             <td>

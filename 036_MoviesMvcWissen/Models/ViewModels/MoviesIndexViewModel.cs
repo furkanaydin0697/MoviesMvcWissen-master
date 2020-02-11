@@ -1,0 +1,19 @@
+﻿using _036_MoviesMvcWissen.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace _036_MoviesMvcWissen.Models.ViewModels
+{
+    public class MoviesIndexViewModel
+    {
+        public List<Movie> Movies { get; set; }
+
+        public SelectList Year { get; set; }
+
+        public string YearId { get; set; }
+
+    }
+}
