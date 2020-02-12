@@ -124,78 +124,141 @@ namespace _036_MoviesMvcWissen.Controllers
 
         [HttpGet]
         // GET: Directors/Edit/5
+
         public ActionResult Edit(int? id)
         {
             if (!id.HasValue)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Id is required!");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var model = db.Directors.Find(id.Value);
-
-            var movies = db.Movies.Select(e => new MovieModel()
+            var movies = db.Movies.Select(e => new SelectListItem()
             {
-                Id = e.Id,
-                MovieName = e.Name
+                Value = e.Id.ToString(),
+                Text = e.Name
             }).ToList();
+            var director = db.Directors.Find(id.Value);
+            //List<int> movieIds = db.MovieDirectors.Where(e => e.DirectorId == id.Value).Select(e => e.MovieId).ToList();
+            List<int> _movieIds = director.MovieDirectors.Select(e => e.MovieId).ToList();
+            DirectorsEditViewModel model = new DirectorsEditViewModel();
+            model.Director = director;
+            model.movieIds = _movieIds;
+            model.Movies = new MultiSelectList(movies, "Value", "Text", model.movieIds);
+            return View("EditNew", model);
 
-            var movieIds = model.MovieDirectors.Select(e => e.MovieId).ToList();
-            ViewBag.movies = new MultiSelectList(movies, "Id", "MovieName", movieIds);
-            return View(model);
-            //if (id == null)
+
+            //DirectorsEditViewModel model = new DirectorsEditViewModel()
             //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Director director = db.Directors.Find(id);
-            //if (director == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(director);
+            //    Director = director,
+            //    Movies = new MultiSelectList(movies, _movieIds),
+            //    movieIds = _movieIds
+            //};
+
+            //return View(model);
         }
+        
+        #region Edit Get 1
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (!id.HasValue)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Id is required!");
+        //    }
 
+        //    var model = db.Directors.Find(id.Value);
+
+        //    var movies = db.Movies.Select(e => new MovieModel()
+        //    {
+        //        Id = e.Id,
+        //        MovieName = e.Name
+        //    }).ToList();
+
+        //    var movieIds = model.MovieDirectors.Select(e => e.MovieId).ToList();
+        //    ViewBag.movies = new MultiSelectList(movies, "Id", "MovieName", movieIds);
+        //    return View(model);
+        //    //if (id == null)
+        //    //{
+        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    //}
+        //    //Director director = db.Directors.Find(id);
+        //    //if (director == null)
+        //    //{
+        //    //    return HttpNotFound();
+        //    //}
+        //    //return View(director);
+        //}
+        #endregion
         // POST: Directors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Retired")] Director director, List<int> movieIds)
+
+        #region Edit Post 1
+        //public ActionResult Edit([Bind(Include = "Id,Name,Surname,Retired")] Director director, List<int> movieIds)
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    db.Entry(director).State = EntityState.Modified;
+        //    //    db.SaveChanges();
+        //    //    return RedirectToAction("Index");
+        //    //}
+
+        //    var entity = db.Directors.SingleOrDefault(e => e.Id == director.Id);
+        //    var dbDirector = db.Directors.Find(director.Id);
+        //    entity.Name = director.Name;
+        //    entity.Surname = director.Surname;
+        //    entity.Retired = director.Retired;
+        //    entity.MovieDirectors = new List<MovieDirector>();
+        //    var movieDirectors = db.MovieDirectors.Where(e => e.DirectorId == director.Id);
+        //    foreach (var movieDirector in movieDirectors)
+        //    {
+        //        db.MovieDirectors.Remove(movieDirector);
+        //    }
+
+        //    foreach (var movieId in movieIds)
+        //    {
+        //        var movieDirector = new MovieDirector()
+        //        {
+        //            MovieId = movieId,
+        //            DirectorId = director.Id
+        //        };
+        //        entity.MovieDirectors.Add(movieDirector);
+        //    }
+        //    db.Entry(entity).State = EntityState.Modified;
+        //    db.SaveChanges();
+        //    TempData["Info"] = "Record successfully updated in database";
+        //    return RedirectToRoute(new { controller = "Directors", action = "Index" });
+        //    //return View(director);
+        //}
+        #endregion
+
+        public ActionResult Edit(DirectorsEditViewModel directorsEditViewModel)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(director).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-
-            var entity = db.Directors.SingleOrDefault(e => e.Id == director.Id);
-            var dbDirector = db.Directors.Find(director.Id);
-            entity.Name = director.Name;
-            entity.Surname = director.Surname;
-            entity.Retired = director.Retired;
-            entity.MovieDirectors = new List<MovieDirector>();
-            var movieDirectors = db.MovieDirectors.Where(e => e.DirectorId == director.Id);
-            foreach (var movieDirector in movieDirectors)
+            if (ModelState.IsValid)
             {
-                db.MovieDirectors.Remove(movieDirector);
-            }
-
-            foreach (var movieId in movieIds)
-            {
-                var movieDirector = new MovieDirector()
+                var director = db.Directors.Find(directorsEditViewModel.Director.Id);
+                director.Name = directorsEditViewModel.Director.Name;
+                director.Surname = directorsEditViewModel.Director.Surname;
+                director.Retired = directorsEditViewModel.Director.Retired;
+                //var movieDirectors = db.MovieDirectors.Where(e => e.DirectorId == director.Id).ToList();
+                var movieDirectors = director.MovieDirectors.ToList();
+                foreach (var movieDirector in movieDirectors)
                 {
-                    MovieId = movieId,
-                    DirectorId = director.Id
-                };
-                entity.MovieDirectors.Add(movieDirector);
+                    db.MovieDirectors.Remove(movieDirector);
+                }
+                director.MovieDirectors = directorsEditViewModel.movieIds.Select(e => new MovieDirector()
+                {
+                    DirectorId = director.Id,
+                    MovieId = e,
+                }).ToList();
+                db.Entry(director).State = EntityState.Modified;
+                db.SaveChanges();
+                
             }
-            db.Entry(entity).State = EntityState.Modified;
-            db.SaveChanges();
-            TempData["Info"] = "Record successfully updated in database";
-            return RedirectToRoute(new { controller = "Directors", action = "Index" });
-            //return View(director);
-        }
+            return RedirectToAction("Index");
 
+        }
         // GET: Directors/Delete/5
         public ActionResult Delete(int? id)
         {

@@ -14,6 +14,9 @@ namespace _036_MoviesMvcWissen.Models.ViewModels
         public SelectList Year { get; set; }
 
         public string YearId { get; set; }
+        public string Name { get; set; }
+        public string Min { get; set; }
+        public string Max { get; set; }
 
     }
 }

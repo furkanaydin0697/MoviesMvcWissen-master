@@ -63,6 +63,66 @@ namespace _036_MoviesMvcWissen.Controllers
             return View(moviesIndexViewModel);
         }
 
+
+        public ActionResult List(MoviesIndexViewModel moviesIndexViewModel)
+        {
+            if (moviesIndexViewModel == null)
+            {
+                moviesIndexViewModel = new MoviesIndexViewModel();
+            }
+
+            var movies = db.Movies.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(moviesIndexViewModel.Name))
+            {
+                movies = movies.Where(e => e.Name.Contains(moviesIndexViewModel.Name));
+            }
+
+
+
+            if (!string.IsNullOrWhiteSpace(moviesIndexViewModel.YearId))
+            {
+                movies = movies.Where(e => e.ProductionYear == moviesIndexViewModel.YearId);
+            }
+
+
+
+            if (!string.IsNullOrWhiteSpace(moviesIndexViewModel.Min) || !string.IsNullOrWhiteSpace(moviesIndexViewModel.Max))
+            {
+                double min = 0;
+                if (double.TryParse(moviesIndexViewModel.Min, out min))
+                {
+                    movies = movies.Where(e => e.BoxOfficeReturn >= min);
+                }
+
+                double max = 0;
+                if (double.TryParse(moviesIndexViewModel.Max, out max))
+                {
+                    movies = movies.Where(e => e.BoxOfficeReturn >= max);
+                }
+            }
+
+
+
+            moviesIndexViewModel.Movies = movies.ToList();
+
+            var years = new List<SelectListItem>();
+            for (int i = DateTime.Now.Year; i >= 1950; i--)
+            {
+                years.Add(new SelectListItem()
+                {
+                    Value = i.ToString(),
+                    Text = i.ToString()
+                });
+            }
+
+            moviesIndexViewModel.Year = new SelectList(years, "Value", "Text", moviesIndexViewModel.YearId);
+
+
+            return View(moviesIndexViewModel);
+        }
+
+
         [NonAction]
         public List<Movie> GetList(bool removeSession = true)
         {
