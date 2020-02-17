@@ -21,6 +21,5 @@ namespace _036_MoviesMvcWissen.Contexts
         public virtual DbSet<MovieDirector> MovieDirectors { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-        public System.Data.Entity.DbSet<_036_MoviesMvcWissen.Models.Demos.Templates.PersonModel> PersonModels { get; set; }
     }
 }

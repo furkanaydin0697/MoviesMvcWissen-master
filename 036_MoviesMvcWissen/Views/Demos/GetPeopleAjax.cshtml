@@ -2,11 +2,21 @@
 
 @{
     ViewBag.Title = "GetPeopleAjax";
+
+    var ajaxOptions = new AjaxOptions()
+    {
+        AllowCache = false,     //genelde false kullanılıyor
+        Url = Url.Action("AddPersonAjax", "Demos"),     //yönlendireceğemiz url
+        HttpMethod = "POST",
+        UpdateTargetId = "div_users",   // işlemin gerçekleştirileceği yer. işlem başarılı olduktan sonra div_usersa update ediyoruz
+        InsertionMode = InsertionMode.Replace       //divin içini güncellemek için, with olursa divle birlikte günceller divin idsi gider
+    };
 }
 
 <h2>GetPeopleAjax</h2>
 
-@using (Html.BeginForm("AddPersonAjax", "DemosController", FormMethod.Post))
+@*@using (Html.BeginForm("AddPersonAjax", "DemosController", FormMethod.Post))*@
+@using (Ajax.BeginForm(ajaxOptions))
 {
     <div class="form-horizontal">
         <h4>PersonModel</h4>
@@ -50,6 +60,13 @@
 }
 
 
-    <hr />
+<hr />
+<div id="div_users">
+    @Html.Partial("_PeopleList", Model.PeopleModel)
+</div>
 
-@Html.Partial("_PeopleList", Model.PeopleModel)
+
+@section ajaxScript
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

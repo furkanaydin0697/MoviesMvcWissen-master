@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace _036_MoviesMvcWissen.Controllers
 {
     #region Razor Demos
+
     public static class NameUtil
     {
         public static string GetName()
@@ -22,6 +23,7 @@ namespace _036_MoviesMvcWissen.Controllers
     public class DemosController : Controller
     {
         #region Razor Demos
+
         public ActionResult Razor1() // kodlar için view'a gidilmelidir.
         {
             return View();
@@ -34,6 +36,8 @@ namespace _036_MoviesMvcWissen.Controllers
         #endregion
 
         #region Route Values
+
+
         public string FromRoute(int id)
         {
             return id.ToString();
@@ -41,6 +45,8 @@ namespace _036_MoviesMvcWissen.Controllers
         #endregion
 
         #region Query String
+
+
         //public string FromQueryString(string name, string surname)
         public string FromQueryString()
         {
@@ -51,6 +57,8 @@ namespace _036_MoviesMvcWissen.Controllers
         #endregion
 
         #region Templates
+
+
         public ActionResult GetPeople()
         {
             List<PersonModel> people;
@@ -113,6 +121,8 @@ namespace _036_MoviesMvcWissen.Controllers
         #endregion
 
         #region HandleError Action Filter
+
+
         public ActionResult DivideByZero()
         {
             var no1 = 14;
@@ -125,6 +135,8 @@ namespace _036_MoviesMvcWissen.Controllers
 
 
         #region AJAX
+
+
         public ActionResult GetPeopleAjax()
         {
             List<PersonModel> people;
@@ -168,13 +180,64 @@ namespace _036_MoviesMvcWissen.Controllers
         [HttpPost]
         public ActionResult AddPersonAjax(PersonModel personModel)
         {
+            Thread.Sleep(3000);
             List<PersonModel> people = Session["people"] as List<PersonModel>;
             personModel.Id = people.Max(e => e.Id) + 1;
             people.Add(personModel);
             Session["people"] = people;
-            return RedirectToAction("GetpeopleAjax");
+            return PartialView("_PeopleList", people);
         }
 
+        public ActionResult DeletePersonAjax(int id)
+        {
+            Thread.Sleep(3000);
+            List<PersonModel> people = Session["people"] as List<PersonModel>;
+            var person = people.FirstOrDefault(e => e.Id == id);
+            people.Remove(person);
+            Session["people"] = people;
+            return PartialView("_PeopleList", people);
+        }
+
+        public ActionResult GetPeopleJson()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var people = new List<PersonModel>()
+                {
+                    new PersonModel()
+                    {
+                        Id = 1,
+                        FullName = "Çağıl Alsaç",
+                        IdentityNo = "123456",
+                        GraduatedFromUniversity = true,
+                        BirthDate = DateTime.Parse("19.06.1980")
+                    },
+                    new PersonModel()
+                    {
+                        Id = 2,
+                        FullName = "Leo",
+                        IdentityNo = "654321",
+                        GraduatedFromUniversity = false,
+                        BirthDate = DateTime.Parse("25.05.2015")
+                    }
+                };
+                var model = people.Select(e => new PersonModelClientModel()
+                {
+                    Id = e.Id,
+                    FullName = e.FullName,
+                    IdentityNo = e.IdentityNo,
+                    GraduatedFromUniversity = e.GraduatedFromUniversity,
+                    BirthDate = e.BirthDate.HasValue ? e.BirthDate.Value.ToShortDateString() : ""
+                });
+                return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return new EmptyResult();
+        }
+
+        public RedirectResult GetPeopleHtml()
+        {
+            return RedirectPermanent("~/DemosPeople.html");
+        }
 
 
         #endregion

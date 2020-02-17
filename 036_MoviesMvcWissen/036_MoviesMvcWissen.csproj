@@ -117,6 +117,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="DemosPeople.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Plugins\bootstrap-datepicker-master\css\bootstrap-datepicker3.min.css" />
@@ -436,6 +437,8 @@
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -545,6 +548,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Demos\Templates\PersonModel.cs" />
+    <Compile Include="Models\Demos\Templates\PersonModelClientModel.cs" />
     <Compile Include="Models\DirectorModel.cs" />
     <Compile Include="Models\MovieModel.cs" />
     <Compile Include="Models\ViewModels\DemosGetPeopleAjaxViewModel.cs" />
