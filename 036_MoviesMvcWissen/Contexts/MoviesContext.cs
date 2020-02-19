@@ -25,6 +25,5 @@ namespace _036_MoviesMvcWissen.Contexts
         public DbSet<Role> Roles { get; set; }
         public virtual DbSet<vwUsers> vwUsers { get; set; }
 
-
     }
 }

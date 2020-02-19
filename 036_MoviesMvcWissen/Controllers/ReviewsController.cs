@@ -26,6 +26,7 @@ namespace _036_MoviesMvcWissen.Controllers
 
         // GET: Reviews/Details/5
         [AllowAnonymous]
+        [Route("Reviews/Details/{id?}")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,6 +42,7 @@ namespace _036_MoviesMvcWissen.Controllers
         }
 
         // GET: Reviews/Create
+        [Route("CreateReview")]
         public ActionResult Create()
         {
             ViewBag.MovieId = new SelectList(db.Movies, "Id", "Name");
