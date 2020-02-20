@@ -91,7 +91,19 @@ namespace _036_MoviesMvcWissen.Controllers
 
             reportsMoviesViewModel.MovieReports = list;
             reportsMoviesViewModel.RecordCount = recordCount;
-            
+            int numberOfPages = Convert.ToInt32(Math.Ceiling((decimal)reportsMoviesViewModel.RecordCount / (decimal)reportsMoviesViewModel.RecordsPerPageCount));
+            List<SelectListItem> pageList = new List<SelectListItem>();
+            SelectListItem pageItem;
+            for (int i = 1; i < numberOfPages; i++)
+            {
+                pageItem = new SelectListItem()
+                {
+                    Value = i.ToString(),
+                    Text = i.ToString()
+                };
+                pageList.Add(pageItem);
+            }
+            reportsMoviesViewModel.PageNumbers = new SelectList(pageList, "Value", "Text", reportsMoviesViewModel.PageNumber);
             return View(reportsMoviesViewModel);
         }
     }

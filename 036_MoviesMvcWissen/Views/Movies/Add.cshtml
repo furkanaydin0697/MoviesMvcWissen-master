@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title</h2>
 <p style="color: darkorange">@ViewBag.Message</p>
 
-<form action="~/Movies/Add" method="post">
+<form action="~/Movies/Add" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="tbName">Name</label>
         <input type="text" class="form-control" id="tbName" name="Name">
@@ -36,6 +36,11 @@
                 <option value="@director.Value">@director.Text</option>
             }
         </select>
+    </div>
+
+    <div class="form-group">
+        <label for="fuImage">Image</label>
+        <input type="file" name="Image" accept="image/*" id="fuImage" @*multiple*@/>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>

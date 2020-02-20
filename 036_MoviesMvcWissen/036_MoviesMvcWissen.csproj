@@ -574,6 +574,10 @@
     <Compile Include="Migrations\202002181719047_MoviesV07.designer.cs">
       <DependentUpon>202002181719047_MoviesV07.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002201657196_MoviesV08.cs" />
+    <Compile Include="Migrations\202002201657196_MoviesV08.designer.cs">
+      <DependentUpon>202002201657196_MoviesV08.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Demos\Templates\PersonModel.cs" />
     <Compile Include="Models\Demos\Templates\PersonModelClientModel.cs" />
@@ -655,6 +659,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Files\Movies\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002050959369_MoviesV01.resx">
@@ -677,6 +682,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002181719047_MoviesV07.resx">
       <DependentUpon>202002181719047_MoviesV07.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002201657196_MoviesV08.resx">
+      <DependentUpon>202002201657196_MoviesV08.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
